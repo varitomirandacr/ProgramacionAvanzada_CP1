@@ -59,11 +59,14 @@ body.login-layout {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(180deg, #1b1f27 0%, #232a35 45%, #1f2530 100%);
+    background-color: var(--space-900) !important;
     background-image:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.2), transparent),
-        radial-gradient(ellipse 65% 45% at 90% 35%, rgba(14, 165, 233, 0.14), transparent),
-        radial-gradient(ellipse 55% 35% at 10% 85%, rgba(124, 58, 237, 0.16), transparent);
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.22), transparent),
+        radial-gradient(ellipse 65% 45% at 90% 35%, rgba(34, 211, 238, 0.1), transparent),
+        radial-gradient(ellipse 55% 35% at 10% 85%, rgba(124, 58, 237, 0.14), transparent),
+        linear-gradient(180deg, var(--space-900) 0%, #10132a 45%, var(--space-800) 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .login-page {
@@ -133,21 +136,6 @@ body.login-layout {
     box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.18);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-}
-
-.login-close {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.6rem;
-    border: 0;
-    background: rgba(15, 23, 42, 0.65);
-    color: #fff;
-    width: 32px;
-    height: 32px;
-    border-radius: 999px;
-    font-size: 1.1rem;
-    line-height: 1;
-    cursor: default;
 }
 
 .login-card-header {
@@ -423,13 +411,20 @@ body.main-layout {
     line-height: 1.55;
 }
 
+.main-layout .hero .hero-cta {
+    margin-top: 0.9rem;
+    margin-bottom: 0;
+}
+
 .main-layout .hero .btn {
     border-radius: 10px;
-    padding: 0.58rem 1.15rem;
+    padding: 0.72rem 1.4rem;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.98rem;
     letter-spacing: 0.01em;
     border: 1px solid rgba(255, 255, 255, 0.35);
+    min-width: 185px;
+    text-align: center;
 }
 
 .main-layout .hero .btn-light {
@@ -442,6 +437,13 @@ body.main-layout {
     color: #0f172a;
     transform: translateY(-1px);
     box-shadow: 0 10px 24px rgba(20, 25, 50, 0.34);
+}
+
+@media (min-width: 768px) {
+    .main-layout .hero .hero-cta {
+        display: flex;
+        justify-content: flex-end;
+    }
 }
 
 /* Cards – galactic */
