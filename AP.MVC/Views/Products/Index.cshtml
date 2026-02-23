@@ -29,6 +29,7 @@
                     }, "Seleccionar campo", new { @class = "form-select", id = "field" })
                 </div>
                 <button type="submit" class="btn btn-primary">Buscar</button>
+                @Html.ActionLink("Limpiar", "Index", "Products", null, new { @class = "btn btn-outline-secondary" })
             }
         </div>
         <div class="create-btn-wrap">
