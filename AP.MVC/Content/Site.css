@@ -927,6 +927,19 @@ body.main-layout {
     border-top: 0;
 }
 
+.product-edit-table .form-control,
+.product-edit-table input,
+.product-edit-table select,
+.product-edit-table textarea {
+    width: 100%;
+    max-width: 100%;
+}
+
+.product-edit-table .text-danger {
+    display: block;
+    margin-top: 0.35rem;
+}
+
 @media (max-width: 767.98px) {
     .product-detail-head {
         flex-direction: column;
