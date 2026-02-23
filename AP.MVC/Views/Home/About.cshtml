@@ -1,0 +1,13 @@
+@{
+    ViewBag.Title = "Acerca de";
+}
+<main aria-labelledby="title">
+    <div class="page-header">
+        <h2 id="title">@ViewBag.Title</h2>
+        @if (ViewBag.Message != null)
+        {
+            <p class="lead">@ViewBag.Message</p>
+        }
+    </div>
+    <p>Use esta sección para proporcionar información adicional sobre la aplicación.</p>
+</main>

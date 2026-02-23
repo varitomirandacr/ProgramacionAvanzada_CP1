@@ -1,0 +1,74 @@
+@model IEnumerable<AP.Data.Product>
+
+@{
+    ViewBag.Title = "Productos";
+}
+
+<main>
+    <div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <div>
+            <h1 class="mb-1">Productos</h1>
+            <p class="lead text-muted mb-0">Administración del catálogo de productos</p>
+        </div>
+        <p class="mb-0">
+            @Html.ActionLink("Crear nuevo", "Create", null, new { @class = "btn btn-primary" })
+        </p>
+    </div>
+
+    <div class="search-bar">
+        @using (Html.BeginForm("Search", "Products", FormMethod.Post, new { @class = "d-flex flex-wrap align-items-center gap-2" }))
+        {
+            <label for="criteria">Buscar:</label>
+            @Html.TextBox("criteria", Request["criteria"] as string, new { @class = "form-control", id = "criteria", placeholder = "Texto a buscar" })
+            <label for="field">Campo:</label>
+            @Html.DropDownList("field", new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Nombre del producto", Value = "ProductName" },
+                new SelectListItem { Text = "Descripción", Value = "Description" },
+                new SelectListItem { Text = "Modificado por", Value = "ModifiedBy" },
+                new SelectListItem { Text = "Valoración", Value = "Rating" }
+            }, "Seleccionar campo", new { @class = "form-select", id = "field" })
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        }
+    </div>
+
+    <div class="table-wrapper">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.ProductName)</th>
+                    <th>@Html.DisplayNameFor(model => model.InventoryID)</th>
+                    <th>@Html.DisplayNameFor(model => model.SupplierID)</th>
+                    <th>@Html.DisplayNameFor(model => model.Description)</th>
+                    <th>@Html.DisplayNameFor(model => model.Rating)</th>
+                    <th>@Html.DisplayNameFor(model => model.CategoryID)</th>
+                    <th>@Html.DisplayNameFor(model => model.LastModified)</th>
+                    <th>@Html.DisplayNameFor(model => model.ModifiedBy)</th>
+                    <th>@Html.DisplayNameFor(model => model.CreatedBy)</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.InventoryID)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SupplierID)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Rating)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CategoryID)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LastModified)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ModifiedBy)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
+                        <td class="text-end action-links">
+                            @Html.ActionLink("Editar", "Edit", new { id = item.ProductID }, new { @class = "text-primary" })
+                            @Html.ActionLink("Detalles", "Details", new { id = item.ProductID }, new { @class = "text-primary" })
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.ProductID }, new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</main>

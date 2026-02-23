@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - AP</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="main-layout">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark app-nav">
+        <div class="container-fluid">
+            <button type="button" class="btn btn-link d-md-none me-2 sidebar-toggler text-white text-decoration-none p-2" id="sidebarToggler" title="Menú" aria-label="Abrir menú">
+                <span aria-hidden="true">☰ Menú</span>
+            </button>
+            @Html.ActionLink("AP", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarMain" title="Alternar navegación" aria-controls="navbarMain"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="navbarMain" class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Productos", "Index", "Products", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Cerrar sesión", "Login", "Access", new { area = "" }, new { @class = "nav-link nav-link-logout" })</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="sidebar-backdrop d-md-none" id="sidebarBackdrop" aria-hidden="true"></div>
+    <div class="app-wrapper">
+        <aside class="app-sidebar" id="appSidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "sidebar-link" })</li>
+                    <li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "sidebar-link" })</li>
+                    <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "sidebar-link" })</li>
+                    <li>@Html.ActionLink("Productos", "Index", "Products", new { area = "" }, new { @class = "sidebar-link" })</li>
+                    <li>@Html.ActionLink("Cerrar sesión", "Login", "Access", new { area = "" }, new { @class = "sidebar-link sidebar-link-logout" })</li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="app-main">
+            <div class="body-content">
+                @RenderBody()
+            </div>
+            <footer class="site-footer">
+                <p class="mb-0">&copy; @DateTime.Now.Year AP. Todos los derechos reservados.</p>
+            </footer>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script>
+        (function () {
+            var sidebar = document.getElementById('appSidebar');
+            var toggler = document.getElementById('sidebarToggler');
+            var backdrop = document.getElementById('sidebarBackdrop');
+            if (sidebar && toggler) {
+                toggler.addEventListener('click', function () {
+                    sidebar.classList.toggle('show');
+                    if (backdrop) {
+                        backdrop.classList.toggle('show', sidebar.classList.contains('show'));
+                        document.body.style.overflow = sidebar.classList.contains('show') ? 'hidden' : '';
+                    }
+                });
+            }
+            if (backdrop) {
+                backdrop.addEventListener('click', function () {
+                    if (sidebar) sidebar.classList.remove('show');
+                    backdrop.classList.remove('show');
+                    document.body.style.overflow = '';
+                });
+            }
+        })();
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

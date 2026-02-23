@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - AP</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="login-layout">
+    <div class="login-page">
+        <div class="login-stars"></div>
+        <header class="login-topbar">
+            <nav class="login-top-nav">
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+                <a href="@Url.Action("About", "Home")">Acerca de</a>
+                <a href="@Url.Action("Index", "Products")">Productos</a>
+                <a href="@Url.Action("Contact", "Home")">Contacto</a>
+            </nav>
+        </header>
+        <div class="login-content">
+            @RenderBody()
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
