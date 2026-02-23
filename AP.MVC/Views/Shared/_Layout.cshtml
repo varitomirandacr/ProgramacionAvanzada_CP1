@@ -79,7 +79,15 @@
                 body.style.overflow = shouldShow ? 'hidden' : '';
             }
 
-            function applyPinnedState(isPinned) {
+            function isSidebarVisible() {
+                if (!sidebar) return false;
+                if (body.classList.contains('sidebar-pinned')) {
+                    return !body.classList.contains('sidebar-collapsed');
+                }
+                return sidebar.classList.contains('show');
+            }
+
+            function applyPinnedState(isPinned, preserveVisible) {
                 body.classList.toggle('sidebar-pinned', isPinned);
                 if (pinBtn) {
                     pinBtn.classList.toggle('active', isPinned);
@@ -88,10 +96,21 @@
                 }
 
                 if (isPinned) {
+                    // In pinned mode, visibility is controlled by sidebar-collapsed.
                     sidebar.classList.remove('show');
+                    if (preserveVisible === false) {
+                        body.classList.add('sidebar-collapsed');
+                    } else {
+                        body.classList.remove('sidebar-collapsed');
+                    }
                 } else {
+                    // In unpinned mode, visibility is controlled by .show.
                     body.classList.remove('sidebar-collapsed');
-                    sidebar.classList.remove('show');
+                    if (preserveVisible) {
+                        sidebar.classList.add('show');
+                    } else {
+                        sidebar.classList.remove('show');
+                    }
                 }
 
                 syncBackdrop();
@@ -99,7 +118,7 @@
 
             var savedPinned = localStorage.getItem(pinStorageKey);
             var pinned = savedPinned === null ? true : savedPinned === 'true';
-            applyPinnedState(pinned);
+            applyPinnedState(pinned, pinned ? true : false);
 
             if (sidebar && toggler) {
                 toggler.addEventListener('click', function () {
@@ -114,9 +133,10 @@
 
             if (pinBtn) {
                 pinBtn.addEventListener('click', function () {
+                    var wasVisible = isSidebarVisible();
                     pinned = !pinned;
                     localStorage.setItem(pinStorageKey, String(pinned));
-                    applyPinnedState(pinned);
+                    applyPinnedState(pinned, wasVisible);
                 });
             }
 
