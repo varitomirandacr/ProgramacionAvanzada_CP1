@@ -78,9 +78,31 @@
                         <td>@Html.DisplayFor(modelItem => item.ModifiedBy)</td>
                         <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
                         <td class="text-end action-links">
-                            @Html.ActionLink("Editar", "Edit", new { id = item.ProductID }, new { @class = "text-primary" })
-                            <a href="#" class="text-primary js-product-details" data-details-url="@Url.Action("DetailsModal", "Products", new { id = item.ProductID })">Detalles</a>
-                            @Html.ActionLink("Eliminar", "Delete", new { id = item.ProductID }, new { @class = "text-danger" })
+                            <a href="@Url.Action("Edit", "Products", new { id = item.ProductID })"
+                               class="action-icon-btn action-edit"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="top"
+                               title="Editar"
+                               aria-label="Editar">
+                                <span aria-hidden="true">✎</span>
+                            </a>
+                            <a href="#"
+                               class="action-icon-btn action-details js-product-details"
+                               data-details-url="@Url.Action("DetailsModal", "Products", new { id = item.ProductID })"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="top"
+                               title="Detalles"
+                               aria-label="Detalles">
+                                <span aria-hidden="true">👁</span>
+                            </a>
+                            <a href="@Url.Action("Delete", "Products", new { id = item.ProductID })"
+                               class="action-icon-btn action-delete"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="top"
+                               title="Eliminar"
+                               aria-label="Eliminar">
+                                <span aria-hidden="true">🗑</span>
+                            </a>
                         </td>
                     </tr>
                 }

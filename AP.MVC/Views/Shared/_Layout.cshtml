@@ -11,18 +11,18 @@
 <body class="main-layout">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark app-nav">
         <div class="container-fluid">
-            <button type="button" class="nav-icon-link nav-icon-burger me-2" id="sidebarToggler" title="Menú" aria-label="Abrir o cerrar menú lateral">
+            <button type="button" class="nav-icon-link nav-icon-burger me-2" id="sidebarToggler" title="Menú" aria-label="Abrir o cerrar menú lateral" data-bs-toggle="tooltip" data-bs-placement="bottom">
                 <span aria-hidden="true">☰</span>
             </button>
             @Html.ActionLink("SC-601 Programacion Avanzada", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <div class="ms-auto app-nav-actions">
-                <a href="#" class="nav-icon-link" aria-label="Configuración" title="Configuración">
+                <a href="#" class="nav-icon-link" aria-label="Configuración" title="Configuración" data-bs-toggle="tooltip" data-bs-placement="bottom">
                     <span aria-hidden="true">⚙</span>
                 </a>
-                <a href="#" class="nav-icon-link" aria-label="Perfil" title="Perfil">
+                <a href="#" class="nav-icon-link" aria-label="Perfil" title="Perfil" data-bs-toggle="tooltip" data-bs-placement="bottom">
                     <span aria-hidden="true">👤</span>
                 </a>
-                <a href="@Url.Action("Logout", "Access")" class="nav-icon-link nav-icon-link-logout" aria-label="Cerrar sesión" title="Cerrar sesión">
+                <a href="@Url.Action("Logout", "Access")" class="nav-icon-link nav-icon-link-logout" aria-label="Cerrar sesión" title="Cerrar sesión" data-bs-toggle="tooltip" data-bs-placement="bottom">
                     <span aria-hidden="true">⎋</span>
                 </a>
             </div>
@@ -33,7 +33,7 @@
         <aside class="app-sidebar" id="appSidebar">
             <div class="sidebar-head">
                 <span class="sidebar-title">Menú</span>
-                <button type="button" class="sidebar-pin-btn active" id="sidebarPinBtn" title="Desfijar menú lateral" aria-label="Desfijar menú lateral">
+                <button type="button" class="sidebar-pin-btn active" id="sidebarPinBtn" title="Desfijar menú lateral" aria-label="Desfijar menú lateral" data-bs-toggle="tooltip" data-bs-placement="right">
                     <span aria-hidden="true">📌</span>
                 </button>
             </div>
@@ -67,6 +67,19 @@
             var backdrop = document.getElementById('sidebarBackdrop');
             var pinBtn = document.getElementById('sidebarPinBtn');
             var pinStorageKey = 'ap.sidebar.pinned';
+            var tooltipInstances = [];
+
+            function initTooltips() {
+                if (!window.bootstrap || !window.bootstrap.Tooltip) return;
+                tooltipInstances.forEach(function (instance) {
+                    if (instance && instance.dispose) instance.dispose();
+                });
+                tooltipInstances = [];
+                var tooltipTriggers = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+                Array.prototype.forEach.call(tooltipTriggers, function (el) {
+                    tooltipInstances.push(new bootstrap.Tooltip(el));
+                });
+            }
 
             function isMobile() {
                 return window.matchMedia('(max-width: 991.98px)').matches;
@@ -93,6 +106,7 @@
                     pinBtn.classList.toggle('active', isPinned);
                     pinBtn.title = isPinned ? 'Desfijar menú lateral' : 'Fijar menú lateral';
                     pinBtn.setAttribute('aria-label', isPinned ? 'Desfijar menú lateral' : 'Fijar menú lateral');
+                    initTooltips();
                 }
 
                 if (isPinned) {
@@ -119,6 +133,7 @@
             var savedPinned = localStorage.getItem(pinStorageKey);
             var pinned = savedPinned === null ? true : savedPinned === 'true';
             applyPinnedState(pinned, pinned ? true : false);
+            initTooltips();
 
             if (sidebar && toggler) {
                 toggler.addEventListener('click', function () {
