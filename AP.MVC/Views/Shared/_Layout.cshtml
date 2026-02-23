@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewBag.Title - AP</title>
+    <title>@ViewBag.Title - SC-601 Programacion Avanzada</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -14,21 +14,19 @@
             <button type="button" class="btn btn-link d-md-none me-2 sidebar-toggler text-white text-decoration-none p-2" id="sidebarToggler" title="Menú" aria-label="Abrir menú">
                 <span aria-hidden="true">☰ Menú</span>
             </button>
-            @Html.ActionLink("AP", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarMain" title="Alternar navegación" aria-controls="navbarMain"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div id="navbarMain" class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Productos", "Index", "Products", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Cerrar sesión", "Login", "Access", new { area = "" }, new { @class = "nav-link nav-link-logout" })</li>
-                </ul>
+            @Html.ActionLink("SC-601 Programacion Avanzada", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <div class="ms-auto app-nav-actions">
+                <a href="#" class="nav-icon-link" aria-label="Configuración" title="Configuración">
+                    <span aria-hidden="true">⚙</span>
+                </a>
+                <a href="#" class="nav-icon-link" aria-label="Perfil" title="Perfil">
+                    <span aria-hidden="true">👤</span>
+                </a>
+                <a href="@Url.Action("Logout", "Access")" class="nav-icon-link nav-icon-link-logout" aria-label="Cerrar sesión" title="Cerrar sesión">
+                    <span aria-hidden="true">⎋</span>
+                </a>
             </div>
-        </div>
+       </div>
     </nav>
     <div class="sidebar-backdrop d-md-none" id="sidebarBackdrop" aria-hidden="true"></div>
     <div class="app-wrapper">
