@@ -79,7 +79,7 @@
                         <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
                         <td class="text-end action-links">
                             @Html.ActionLink("Editar", "Edit", new { id = item.ProductID }, new { @class = "text-primary" })
-                            @Html.ActionLink("Detalles", "Details", new { id = item.ProductID }, new { @class = "text-primary" })
+                            <a href="#" class="text-primary js-product-details" data-details-url="@Url.Action("DetailsModal", "Products", new { id = item.ProductID })">Detalles</a>
                             @Html.ActionLink("Eliminar", "Delete", new { id = item.ProductID }, new { @class = "text-danger" })
                         </td>
                     </tr>
@@ -112,4 +112,58 @@
             </nav>
         }
     </div>
+
+    <div class="modal fade product-details-modal" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productDetailsModalLabel">Detalles del producto</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="productDetailsBody">
+                    <div class="modal-loading">Cargando detalles...</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
+
+@section Scripts {
+    <script>
+        (function () {
+            var detailsModalEl = document.getElementById('productDetailsModal');
+            var detailsBody = document.getElementById('productDetailsBody');
+            if (!detailsModalEl || !detailsBody || !window.bootstrap) return;
+
+            var detailsModal = new bootstrap.Modal(detailsModalEl);
+            var detailLinks = document.querySelectorAll('.js-product-details');
+
+            function renderError() {
+                detailsBody.innerHTML = '<div class="modal-loading">No fue posible cargar los detalles.</div>';
+            }
+
+            detailLinks.forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var url = link.getAttribute('data-details-url');
+                    if (!url) return;
+
+                    detailsBody.innerHTML = '<div class="modal-loading">Cargando detalles...</div>';
+                    detailsModal.show();
+
+                    fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                        .then(function (response) {
+                            if (!response.ok) throw new Error('Failed request');
+                            return response.text();
+                        })
+                        .then(function (html) {
+                            detailsBody.innerHTML = html;
+                        })
+                        .catch(function () {
+                            renderError();
+                        });
+                });
+            });
+        })();
+    </script>
+}

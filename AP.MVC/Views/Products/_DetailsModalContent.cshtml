@@ -1,0 +1,51 @@
+@model AP.Data.Product
+
+<div class="product-detail-modal-card">
+    <div class="product-detail-head">
+        <div class="product-detail-title">@Model.ProductName</div>
+        <div class="product-detail-actions">
+            <a href="@Url.Action("Edit", "Products", new { id = Model.ProductID })" class="btn btn-primary btn-sm">Editar</a>
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+    <table class="table product-detail-table">
+        <tbody>
+            <tr>
+                <th>Nombre del producto</th>
+                <td>@Model.ProductName</td>
+            </tr>
+            <tr>
+                <th>Inventario</th>
+                <td>@Model.InventoryID</td>
+            </tr>
+            <tr>
+                <th>Proveedor</th>
+                <td>@Model.SupplierID</td>
+            </tr>
+            <tr>
+                <th>Descripción</th>
+                <td>@Model.Description</td>
+            </tr>
+            <tr>
+                <th>Valoración</th>
+                <td>@Model.Rating</td>
+            </tr>
+            <tr>
+                <th>Categoría</th>
+                <td>@Model.CategoryID</td>
+            </tr>
+            <tr>
+                <th>Última modificación</th>
+                <td>@Model.LastModified</td>
+            </tr>
+            <tr>
+                <th>Modificado por</th>
+                <td>@Model.ModifiedBy</td>
+            </tr>
+            <tr>
+                <th>Creado por</th>
+                <td>@Model.CreatedBy</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

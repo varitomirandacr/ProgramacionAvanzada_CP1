@@ -88,6 +88,23 @@ namespace AP.MVC.Controllers
             return View(product);
         }
 
+        // GET: Products/DetailsModal/5
+        public ActionResult DetailsModal(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Product product = _business.GetProducts((int)id).FirstOrDefault();
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            return PartialView("_DetailsModalContent", product);
+        }
+
         // GET: Products/Create
         public ActionResult Create()
         {
