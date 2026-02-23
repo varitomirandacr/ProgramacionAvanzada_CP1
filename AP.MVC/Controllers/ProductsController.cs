@@ -1,9 +1,7 @@
-﻿using AP.Core.Business;
+using AP.Core.Business;
 using AP.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace AP.MVC.Controllers
@@ -13,14 +11,70 @@ namespace AP.MVC.Controllers
         private ProductBusiness _business = new ProductBusiness();
 
         // GET: Products
-        public async Task<ActionResult> Index()
+        public ActionResult Index(int page = 1, int pageSize = 10, string criteria = null, string field = null)
         {
-            var products = _business.GetProducts(id: 0);
-            return View(products);
+            if (pageSize <= 0) pageSize = 10;
+            if (page <= 0) page = 1;
+
+            var productsQuery = _business.GetProducts(id: 0).AsQueryable();
+            var hasSearch = !string.IsNullOrWhiteSpace(criteria) && !string.IsNullOrWhiteSpace(field);
+
+            if (hasSearch)
+            {
+                if (field == "Rating")
+                {
+                    if (decimal.TryParse(criteria, out var ratingValue))
+                    {
+                        productsQuery = productsQuery.Where(p => p.Rating >= ratingValue);
+                    }
+                    else
+                    {
+                        productsQuery = Enumerable.Empty<Product>().AsQueryable();
+                    }
+                }
+                else
+                {
+                    var criteriaLower = criteria.ToLower();
+                    switch (field)
+                    {
+                        case "ProductName":
+                            productsQuery = productsQuery.Where(p => p.ProductName != null && p.ProductName.ToLower().Contains(criteriaLower));
+                            break;
+                        case "Description":
+                            productsQuery = productsQuery.Where(p => p.Description != null && p.Description.ToLower().Contains(criteriaLower));
+                            break;
+                        case "ModifiedBy":
+                            productsQuery = productsQuery.Where(p => p.ModifiedBy != null && p.ModifiedBy.ToLower().Contains(criteriaLower));
+                            break;
+                        default:
+                            productsQuery = Enumerable.Empty<Product>().AsQueryable();
+                            break;
+                    }
+                }
+            }
+
+            var totalItems = productsQuery.Count();
+            var totalPages = totalItems == 0 ? 1 : (int)System.Math.Ceiling((double)totalItems / pageSize);
+            if (page > totalPages) page = totalPages;
+
+            var pagedProducts = productsQuery
+                .OrderBy(p => p.ProductID)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalItems = totalItems;
+            ViewBag.Criteria = criteria;
+            ViewBag.Field = field;
+
+            return View(pagedProducts);
         }
 
         // GET: Products/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -45,7 +99,7 @@ namespace AP.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ProductID,ProductName,InventoryID,SupplierID,Description,Rating,CategoryID,LastModified,ModifiedBy,CreatedBy")] Product product)
+        public ActionResult Create([Bind(Include = "ProductID,ProductName,InventoryID,SupplierID,Description,Rating,CategoryID,LastModified,ModifiedBy,CreatedBy")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +111,7 @@ namespace AP.MVC.Controllers
         }
 
         // GET: Products/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -76,7 +130,7 @@ namespace AP.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ProductID,ProductName,InventoryID,SupplierID,Description,Rating,CategoryID,LastModified,ModifiedBy,CreatedBy")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductID,ProductName,InventoryID,SupplierID,Description,Rating,CategoryID,LastModified,ModifiedBy,CreatedBy")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +141,7 @@ namespace AP.MVC.Controllers
         }
 
         // GET: Products/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -104,7 +158,7 @@ namespace AP.MVC.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Product product = _business.GetProducts((int)id).FirstOrDefault();
             _business.Delete(product.ProductID);
@@ -112,10 +166,9 @@ namespace AP.MVC.Controllers
         }
 
         [HttpPost, ActionName("Search")]
-        public async Task<ActionResult> Search(string criteria, string field)
+        public ActionResult Search(string criteria, string field)
         {
-            var products = _business.SearchProducts(criteria, field);
-            return View("Index", products);
+            return RedirectToAction("Index", new { page = 1, pageSize = 10, criteria, field });
         }
     }
 }

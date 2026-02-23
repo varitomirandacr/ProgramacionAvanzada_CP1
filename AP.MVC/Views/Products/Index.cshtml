@@ -2,6 +2,18 @@
 
 @{
     ViewBag.Title = "Productos";
+    var currentPage = (int)(ViewBag.CurrentPage ?? 1);
+    var totalPages = (int)(ViewBag.TotalPages ?? 1);
+    var totalItems = (int)(ViewBag.TotalItems ?? 0);
+    var currentCriteria = (ViewBag.Criteria as string) ?? string.Empty;
+    var currentField = (ViewBag.Field as string) ?? string.Empty;
+    var fieldOptions = new List<SelectListItem>
+    {
+        new SelectListItem { Text = "Nombre del producto", Value = "ProductName" },
+        new SelectListItem { Text = "Descripción", Value = "Description" },
+        new SelectListItem { Text = "Modificado por", Value = "ModifiedBy" },
+        new SelectListItem { Text = "Valoración", Value = "Rating" }
+    };
 }
 
 <main>
@@ -16,17 +28,16 @@
             {
                 <div>
                     <label for="criteria">Buscar:</label>
-                    @Html.TextBox("criteria", Request["criteria"] as string, new { @class = "form-control", id = "criteria", placeholder = "Texto a buscar" })
+                    @Html.TextBox("criteria", currentCriteria, new { @class = "form-control", id = "criteria", placeholder = "Texto a buscar" })
                 </div>
                 <div>
                     <label for="field">Campo:</label>
-                    @Html.DropDownList("field", new List<SelectListItem>
-                    {
-                        new SelectListItem { Text = "Nombre del producto", Value = "ProductName" },
-                        new SelectListItem { Text = "Descripción", Value = "Description" },
-                        new SelectListItem { Text = "Modificado por", Value = "ModifiedBy" },
-                        new SelectListItem { Text = "Valoración", Value = "Rating" }
-                    }, "Seleccionar campo", new { @class = "form-select", id = "field" })
+                    @Html.DropDownList(
+                        "field",
+                        new SelectList(fieldOptions, "Value", "Text", currentField),
+                        "Seleccionar campo",
+                        new { @class = "form-select", id = "field" }
+                    )
                 </div>
                 <button type="submit" class="btn btn-primary">Buscar</button>
                 @Html.ActionLink("Limpiar", "Index", "Products", null, new { @class = "btn btn-outline-secondary" })
@@ -75,5 +86,30 @@
                 }
             </tbody>
         </table>
+    </div>
+
+    <div class="pagination-toolbar">
+        <span class="pagination-summary">Mostrando @Model.Count() de @totalItems productos</span>
+        @if (totalPages > 1)
+        {
+            <nav aria-label="Paginación de productos">
+                <ul class="pagination mb-0">
+                    <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = currentPage - 1, pageSize = 10, criteria = currentCriteria, field = currentField })">Anterior</a>
+                    </li>
+
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        <li class="page-item @(i == currentPage ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { page = i, pageSize = 10, criteria = currentCriteria, field = currentField })">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = currentPage + 1, pageSize = 10, criteria = currentCriteria, field = currentField })">Siguiente</a>
+                    </li>
+                </ul>
+            </nav>
+        }
     </div>
 </main>

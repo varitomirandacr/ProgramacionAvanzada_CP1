@@ -627,6 +627,62 @@ body.main-layout {
     }
 }
 
+/* Pagination (Products) */
+.pagination-toolbar {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.pagination-summary {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+}
+
+.main-layout .pagination {
+    border: 1px solid rgba(99, 102, 241, 0.45);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow:
+        0 0 12px rgba(99, 102, 241, 0.2),
+        0 0 24px rgba(34, 211, 238, 0.08);
+}
+
+.main-layout .pagination .page-link {
+    background-color: #171a30 !important;
+    color: #d6dcff !important;
+    border-color: rgba(99, 102, 241, 0.25) !important;
+    font-weight: 500;
+    min-width: 42px;
+    text-align: center;
+    transition: all 0.18s ease;
+}
+
+.main-layout .pagination .page-link:hover {
+    background-color: #1f2442 !important;
+    color: #ffffff !important;
+    border-color: rgba(99, 102, 241, 0.45) !important;
+    box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.25);
+}
+
+.main-layout .pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, var(--violet-500) 0%, var(--purple-500) 100%) !important;
+    border-color: rgba(129, 140, 248, 0.95) !important;
+    color: #fff !important;
+    box-shadow:
+        0 0 10px rgba(99, 102, 241, 0.55),
+        0 0 20px rgba(34, 211, 238, 0.2);
+}
+
+.main-layout .pagination .page-item.disabled .page-link {
+    background: rgba(255, 255, 255, 0.04) !important;
+    color: var(--color-text-muted) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
 /* Detail card */
 .main-layout .detail-card {
     background: var(--color-surface-elevated);
