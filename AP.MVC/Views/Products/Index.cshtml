@@ -5,31 +5,35 @@
 }
 
 <main>
-    <div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-2">
-        <div>
-            <h1 class="mb-1">Productos</h1>
-            <p class="lead text-muted mb-0">Administración del catálogo de productos</p>
-        </div>
-        <p class="mb-0">
-            @Html.ActionLink("Crear nuevo", "Create", null, new { @class = "btn btn-primary" })
-        </p>
+    <div class="page-header">
+        <h1 class="mb-1">Productos</h1>
+        <p class="lead text-muted mb-0">Administración del catálogo de productos</p>
     </div>
 
-    <div class="search-bar">
-        @using (Html.BeginForm("Search", "Products", FormMethod.Post, new { @class = "d-flex flex-wrap align-items-center gap-2" }))
-        {
-            <label for="criteria">Buscar:</label>
-            @Html.TextBox("criteria", Request["criteria"] as string, new { @class = "form-control", id = "criteria", placeholder = "Texto a buscar" })
-            <label for="field">Campo:</label>
-            @Html.DropDownList("field", new List<SelectListItem>
+    <div class="search-create-row">
+        <div class="search-bar search-bar-inline mb-0">
+            @using (Html.BeginForm("Search", "Products", FormMethod.Post, new { @class = "d-flex flex-wrap align-items-end gap-2" }))
             {
-                new SelectListItem { Text = "Nombre del producto", Value = "ProductName" },
-                new SelectListItem { Text = "Descripción", Value = "Description" },
-                new SelectListItem { Text = "Modificado por", Value = "ModifiedBy" },
-                new SelectListItem { Text = "Valoración", Value = "Rating" }
-            }, "Seleccionar campo", new { @class = "form-select", id = "field" })
-            <button type="submit" class="btn btn-primary">Buscar</button>
-        }
+                <div>
+                    <label for="criteria">Buscar:</label>
+                    @Html.TextBox("criteria", Request["criteria"] as string, new { @class = "form-control", id = "criteria", placeholder = "Texto a buscar" })
+                </div>
+                <div>
+                    <label for="field">Campo:</label>
+                    @Html.DropDownList("field", new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "Nombre del producto", Value = "ProductName" },
+                        new SelectListItem { Text = "Descripción", Value = "Description" },
+                        new SelectListItem { Text = "Modificado por", Value = "ModifiedBy" },
+                        new SelectListItem { Text = "Valoración", Value = "Rating" }
+                    }, "Seleccionar campo", new { @class = "form-select", id = "field" })
+                </div>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            }
+        </div>
+        <div class="create-btn-wrap">
+            @Html.ActionLink("Crear nuevo", "Create", null, new { @class = "btn btn-primary" })
+        </div>
     </div>
 
     <div class="table-wrapper">

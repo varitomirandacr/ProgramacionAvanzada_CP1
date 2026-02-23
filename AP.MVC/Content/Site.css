@@ -528,6 +528,66 @@ body.main-layout {
     color: var(--color-text-muted);
 }
 
+/* Products toolbar: search + create in one row */
+.search-create-row {
+    display: grid;
+    grid-template-columns: minmax(460px, 680px) auto;
+    align-items: end;
+    column-gap: 1.25rem;
+    row-gap: 0.85rem;
+    margin: 1rem 0 2rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid rgba(99, 102, 241, 0.45);
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(34, 211, 238, 0.04) 100%);
+    box-shadow:
+        0 0 14px rgba(99, 102, 241, 0.25),
+        0 0 30px rgba(34, 211, 238, 0.12),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.search-bar-inline {
+    width: 100%;
+    max-width: 680px;
+    min-width: 0;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0;
+}
+
+.search-bar-inline form {
+    padding: 0.35rem 0.5rem;
+}
+
+.search-bar-inline form > div {
+    min-width: 190px;
+}
+
+.search-bar-inline .form-control,
+.search-bar-inline .form-select {
+    width: 100%;
+}
+
+.create-btn-wrap {
+    justify-self: end;
+    align-self: end;
+}
+
+.search-create-row + .table-wrapper {
+    margin-top: 1rem;
+}
+
+@media (max-width: 991.98px) {
+    .search-create-row {
+        grid-template-columns: 1fr;
+    }
+
+    .create-btn-wrap {
+        justify-self: start;
+    }
+}
+
 /* Detail card */
 .main-layout .detail-card {
     background: var(--color-surface-elevated);
