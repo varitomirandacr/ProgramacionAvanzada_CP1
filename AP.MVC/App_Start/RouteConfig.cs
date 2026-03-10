@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,11 +13,14 @@ namespace AP.MVC
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
+            var defaultRoute = routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Access", action = "Login", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "AP.MVC.Controllers" }
             );
+
+            defaultRoute.DataTokens["UseNamespaceFallback"] = false;
         }
     }
 }
