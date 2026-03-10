@@ -9,169 +9,180 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body class="main-layout">
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark app-nav">
-        <div class="container-fluid">
-            <button type="button" class="nav-icon-link nav-icon-burger me-2" id="sidebarToggler" title="Menú" aria-label="Abrir o cerrar menú lateral" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                <span aria-hidden="true">☰</span>
-            </button>
-            @Html.ActionLink("SC-601 Programacion Avanzada", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <div class="ms-auto app-nav-actions">
-                <a href="#" class="nav-icon-link" aria-label="Configuración" title="Configuración" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                    <span aria-hidden="true">⚙</span>
-                </a>
-                <a href="#" class="nav-icon-link" aria-label="Perfil" title="Perfil" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                    <span aria-hidden="true">👤</span>
-                </a>
-                <a href="@Url.Action("Logout", "Access")" class="nav-icon-link nav-icon-link-logout" aria-label="Cerrar sesión" title="Cerrar sesión" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                    <span aria-hidden="true">⎋</span>
-                </a>
-            </div>
-       </div>
-    </nav>
-    <div class="sidebar-backdrop d-md-none" id="sidebarBackdrop" aria-hidden="true"></div>
-    <div class="app-wrapper">
-        <aside class="app-sidebar" id="appSidebar">
-            <div class="sidebar-head">
-                <span class="sidebar-title">Menú</span>
-                <button type="button" class="sidebar-pin-btn active" id="sidebarPinBtn" title="Desfijar menú lateral" aria-label="Desfijar menú lateral" data-bs-toggle="tooltip" data-bs-placement="right">
-                    <span aria-hidden="true">📌</span>
-                </button>
-            </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "sidebar-link" })</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "sidebar-link" })</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "sidebar-link" })</li>
-                    <li>@Html.ActionLink("Productos", "Index", "Products", new { area = "" }, new { @class = "sidebar-link" })</li>
-                    <li>@Html.ActionLink("Cerrar sesión", "Login", "Access", new { area = "" }, new { @class = "sidebar-link sidebar-link-logout" })</li>
-                </ul>
-            </nav>
-        </aside>
-        <div class="app-main">
-            <div class="body-content">
-                @RenderBody()
-            </div>
-            <footer class="site-footer">
-                <p class="mb-0">&copy; @DateTime.Now.Year AP. Todos los derechos reservados.</p>
-            </footer>
-        </div>
-    </div>
+	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark app-nav">
+		<div class="container-fluid">
+			<button type="button" class="nav-icon-link nav-icon-burger me-2" id="sidebarToggler" title="Menú" aria-label="Abrir o cerrar menú lateral" data-bs-toggle="tooltip" data-bs-placement="bottom">
+				<span aria-hidden="true">☰</span>
+			</button>
+			@Html.ActionLink("SC-601 Programacion Avanzada", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+			<div class="ms-auto app-nav-actions">
+				<a href="#" class="nav-icon-link" aria-label="Configuración" title="Configuración" data-bs-toggle="tooltip" data-bs-placement="bottom">
+					<span aria-hidden="true">⚙</span>
+				</a>
+				<a href="#" class="nav-icon-link" aria-label="Perfil" title="Perfil" data-bs-toggle="tooltip" data-bs-placement="bottom">
+					<span aria-hidden="true">👤</span>
+				</a>
+				@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @class = "d-inline" }))
+				{
+					@Html.AntiForgeryToken()
+					<button type="submit" class="nav-icon-link nav-icon-link-logout border-0 bg-transparent p-0" aria-label="Cerrar sesión" title="Cerrar sesión" data-bs-toggle="tooltip" data-bs-placement="bottom">
+						<span aria-hidden="true">⎋</span>
+					</button>
+				}
+			</div>
+		</div>
+	</nav>
+	<div class="sidebar-backdrop d-md-none" id="sidebarBackdrop" aria-hidden="true"></div>
+	<div class="app-wrapper">
+		<aside class="app-sidebar" id="appSidebar">
+			<div class="sidebar-head">
+				<span class="sidebar-title">Menú</span>
+				<button type="button" class="sidebar-pin-btn active" id="sidebarPinBtn" title="Desfijar menú lateral" aria-label="Desfijar menú lateral" data-bs-toggle="tooltip" data-bs-placement="right">
+					<span aria-hidden="true">📌</span>
+				</button>
+			</div>
+			<nav class="sidebar-nav">
+				<ul>
+					<li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "sidebar-link" })</li>
+					<li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "sidebar-link" })</li>
+					<li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "sidebar-link" })</li>
+					<li>@Html.ActionLink("Productos", "Index", "Products", new { area = "" }, new { @class = "sidebar-link" })</li>
+					<li>
+						@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @class = "d-inline" }))
+						{
+							@Html.AntiForgeryToken()
+							<button type="submit" class="sidebar-link sidebar-link-logout border-0 bg-transparent text-start w-100">Cerrar sesión</button>
+						}
+					</li>
+				</ul>
+			</nav>
+		</aside>
+		<div class="app-main">
+			<div class="body-content">
+				@RenderBody()
+			</div>
+			<footer class="site-footer">
+				<p class="mb-0">&copy; @DateTime.Now.Year AP. Todos los derechos reservados.</p>
+			</footer>
+		</div>
+	</div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    <script>
-        (function () {
-            var body = document.body;
-            var sidebar = document.getElementById('appSidebar');
-            var toggler = document.getElementById('sidebarToggler');
-            var backdrop = document.getElementById('sidebarBackdrop');
-            var pinBtn = document.getElementById('sidebarPinBtn');
-            var pinStorageKey = 'ap.sidebar.pinned';
-            var tooltipInstances = [];
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	@Scripts.Render("~/bundles/app")
+	<script>
+		(function () {
+			var body = document.body;
+			var sidebar = document.getElementById('appSidebar');
+			var toggler = document.getElementById('sidebarToggler');
+			var backdrop = document.getElementById('sidebarBackdrop');
+			var pinBtn = document.getElementById('sidebarPinBtn');
+			var pinStorageKey = 'ap.sidebar.pinned';
+			var tooltipInstances = [];
 
-            function initTooltips() {
-                if (!window.bootstrap || !window.bootstrap.Tooltip) return;
-                tooltipInstances.forEach(function (instance) {
-                    if (instance && instance.dispose) instance.dispose();
-                });
-                tooltipInstances = [];
-                var tooltipTriggers = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-                Array.prototype.forEach.call(tooltipTriggers, function (el) {
-                    tooltipInstances.push(new bootstrap.Tooltip(el));
-                });
-            }
+			function initTooltips() {
+				if (!window.bootstrap || !window.bootstrap.Tooltip) return;
+				tooltipInstances.forEach(function (instance) {
+					if (instance && instance.dispose) instance.dispose();
+				});
+				tooltipInstances = [];
+				var tooltipTriggers = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+				Array.prototype.forEach.call(tooltipTriggers, function (el) {
+					tooltipInstances.push(new bootstrap.Tooltip(el));
+				});
+			}
 
-            function isMobile() {
-                return window.matchMedia('(max-width: 991.98px)').matches;
-            }
+			function isMobile() {
+				return window.matchMedia('(max-width: 991.98px)').matches;
+			}
 
-            function syncBackdrop() {
-                if (!backdrop) return;
-                var shouldShow = sidebar && sidebar.classList.contains('show') && (isMobile() || !body.classList.contains('sidebar-pinned'));
-                backdrop.classList.toggle('show', shouldShow);
-                body.style.overflow = shouldShow ? 'hidden' : '';
-            }
+			function syncBackdrop() {
+				if (!backdrop) return;
+				var shouldShow = sidebar && sidebar.classList.contains('show') && (isMobile() || !body.classList.contains('sidebar-pinned'));
+				backdrop.classList.toggle('show', shouldShow);
+				body.style.overflow = shouldShow ? 'hidden' : '';
+			}
 
-            function isSidebarVisible() {
-                if (!sidebar) return false;
-                if (body.classList.contains('sidebar-pinned')) {
-                    return !body.classList.contains('sidebar-collapsed');
-                }
-                return sidebar.classList.contains('show');
-            }
+			function isSidebarVisible() {
+				if (!sidebar) return false;
+				if (body.classList.contains('sidebar-pinned')) {
+					return !body.classList.contains('sidebar-collapsed');
+				}
+				return sidebar.classList.contains('show');
+			}
 
-            function applyPinnedState(isPinned, preserveVisible) {
-                body.classList.toggle('sidebar-pinned', isPinned);
-                if (pinBtn) {
-                    pinBtn.classList.toggle('active', isPinned);
-                    pinBtn.title = isPinned ? 'Desfijar menú lateral' : 'Fijar menú lateral';
-                    pinBtn.setAttribute('aria-label', isPinned ? 'Desfijar menú lateral' : 'Fijar menú lateral');
-                    initTooltips();
-                }
+			function applyPinnedState(isPinned, preserveVisible) {
+				body.classList.toggle('sidebar-pinned', isPinned);
+				if (pinBtn) {
+					pinBtn.classList.toggle('active', isPinned);
+					pinBtn.title = isPinned ? 'Desfijar menú lateral' : 'Fijar menú lateral';
+					pinBtn.setAttribute('aria-label', isPinned ? 'Desfijar menú lateral' : 'Fijar menú lateral');
+					initTooltips();
+				}
 
-                if (isPinned) {
-                    // In pinned mode, visibility is controlled by sidebar-collapsed.
-                    sidebar.classList.remove('show');
-                    if (preserveVisible === false) {
-                        body.classList.add('sidebar-collapsed');
-                    } else {
-                        body.classList.remove('sidebar-collapsed');
-                    }
-                } else {
-                    // In unpinned mode, visibility is controlled by .show.
-                    body.classList.remove('sidebar-collapsed');
-                    if (preserveVisible) {
-                        sidebar.classList.add('show');
-                    } else {
-                        sidebar.classList.remove('show');
-                    }
-                }
+				if (isPinned) {
+					// In pinned mode, visibility is controlled by sidebar-collapsed.
+					sidebar.classList.remove('show');
+					if (preserveVisible === false) {
+						body.classList.add('sidebar-collapsed');
+					} else {
+						body.classList.remove('sidebar-collapsed');
+					}
+				} else {
+					// In unpinned mode, visibility is controlled by .show.
+					body.classList.remove('sidebar-collapsed');
+					if (preserveVisible) {
+						sidebar.classList.add('show');
+					} else {
+						sidebar.classList.remove('show');
+					}
+				}
 
-                syncBackdrop();
-            }
+				syncBackdrop();
+			}
 
-            var savedPinned = localStorage.getItem(pinStorageKey);
-            var pinned = savedPinned === null ? true : savedPinned === 'true';
-            applyPinnedState(pinned, pinned ? true : false);
-            initTooltips();
+			var savedPinned = localStorage.getItem(pinStorageKey);
+			var pinned = savedPinned === null ? true : savedPinned === 'true';
+			applyPinnedState(pinned, pinned ? true : false);
+			initTooltips();
 
-            if (sidebar && toggler) {
-                toggler.addEventListener('click', function () {
-                    if (isMobile() || !body.classList.contains('sidebar-pinned')) {
-                        sidebar.classList.toggle('show');
-                    } else {
-                        body.classList.toggle('sidebar-collapsed');
-                    }
-                    syncBackdrop();
-                });
-            }
+			if (sidebar && toggler) {
+				toggler.addEventListener('click', function () {
+					if (isMobile() || !body.classList.contains('sidebar-pinned')) {
+						sidebar.classList.toggle('show');
+					} else {
+						body.classList.toggle('sidebar-collapsed');
+					}
+					syncBackdrop();
+				});
+			}
 
-            if (pinBtn) {
-                pinBtn.addEventListener('click', function () {
-                    var wasVisible = isSidebarVisible();
-                    pinned = !pinned;
-                    localStorage.setItem(pinStorageKey, String(pinned));
-                    applyPinnedState(pinned, wasVisible);
-                });
-            }
+			if (pinBtn) {
+				pinBtn.addEventListener('click', function () {
+					var wasVisible = isSidebarVisible();
+					pinned = !pinned;
+					localStorage.setItem(pinStorageKey, String(pinned));
+					applyPinnedState(pinned, wasVisible);
+				});
+			}
 
-            if (backdrop) {
-                backdrop.addEventListener('click', function () {
-                    if (sidebar) sidebar.classList.remove('show');
-                    backdrop.classList.remove('show');
-                    body.style.overflow = '';
-                });
-            }
+			if (backdrop) {
+				backdrop.addEventListener('click', function () {
+					if (sidebar) sidebar.classList.remove('show');
+					backdrop.classList.remove('show');
+					body.style.overflow = '';
+				});
+			}
 
-            window.addEventListener('resize', function () {
-                if (isMobile()) {
-                    body.classList.remove('sidebar-collapsed');
-                    if (sidebar) sidebar.classList.remove('show');
-                }
-                syncBackdrop();
-            });
-        })();
-    </script>
-    @RenderSection("scripts", required: false)
+			window.addEventListener('resize', function () {
+				if (isMobile()) {
+					body.classList.remove('sidebar-collapsed');
+					if (sidebar) sidebar.classList.remove('show');
+				}
+				syncBackdrop();
+			});
+		})();
+	</script>
+	@RenderSection("scripts", required: false)
 </body>
 </html>

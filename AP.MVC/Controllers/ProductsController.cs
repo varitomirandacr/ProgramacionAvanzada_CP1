@@ -185,7 +185,15 @@ namespace AP.MVC.Controllers
         [HttpPost, ActionName("Search")]
         public ActionResult Search(string criteria, string field)
         {
+            // SOLID: principio tal Y
             return RedirectToAction("Index", new { page = 1, pageSize = 10, criteria, field });
+        }
+
+        // GET: Products
+        public JsonResult JsonCall()
+        {
+            // SOLID: principio tal X
+            return Json(new { message = "Todo bien" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

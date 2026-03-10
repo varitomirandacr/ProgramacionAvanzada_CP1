@@ -1,0 +1,46 @@
+@model AP.MVC.Models.LoginViewModel
+@{
+    ViewBag.Title = "Iniciar sesión";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="login-card">
+	<div class="login-card-header">
+		<h1>Iniciar sesión</h1>
+		<p class="login-card-sub">Ingrese credenciales (usuario y contraseña pueden ir vacíos)</p>
+	</div>
+	@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form", role = "form" }))
+	{
+		@Html.AntiForgeryToken()
+		<div class="row">
+			@Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
+			<div class="col-md-10">
+				@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="row">
+			@Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
+			<div class="col-md-10">
+				@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+				@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+			</div>
+		</div>
+		<div class="row">
+			<div class="offset-md-2 col-md-10">
+				<div class="checkbox">
+					@Html.CheckBoxFor(m => m.RememberMe)
+					@Html.LabelFor(m => m.RememberMe)
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="offset-md-2 col-md-10">
+				<button type="submit" class="btn btn-login w-100">Entrar</button>
+			</div>
+		</div>
+		<p class="login-register">¿No tiene una cuenta?
+			@Html.ActionLink("Register as a new user", "Register")
+		</p>
+	}
+</div>
