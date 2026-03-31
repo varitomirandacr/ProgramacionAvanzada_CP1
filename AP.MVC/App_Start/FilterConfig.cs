@@ -1,4 +1,4 @@
-﻿using System.Web;
+using System.Web;
 using System.Web.Mvc;
 
 namespace AP.MVC
@@ -7,7 +7,7 @@ namespace AP.MVC
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            // Global exceptions are handled via Application_Error and customErrors.
         }
     }
 }

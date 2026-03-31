@@ -13,7 +13,7 @@ using AP.MVC.Models;
 
 namespace AP.MVC.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -92,11 +92,6 @@ namespace AP.MVC.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
-        }
-
-        public ActionResult Logout()
-        {
-            return RedirectToAction("Login");
         }
 
         //
@@ -404,6 +399,17 @@ namespace AP.MVC.Controllers
             Session.Clear();
             Session.RemoveAll();
             Session.Abandon();
+
+            if (Request.Cookies[".AspNet.ApplicationCookie"] != null)
+            {
+                var cookie = new HttpCookie(".AspNet.ApplicationCookie")
+                {
+                    Expires = DateTime.Now.AddDays(-1),
+                    HttpOnly = true
+                };
+                Response.Cookies.Add(cookie);
+            }
+
             return RedirectToAction("Login", "Account");
         }
 

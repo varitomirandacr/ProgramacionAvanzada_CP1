@@ -1,12 +1,14 @@
 using AP.Core.Business;
 using AP.Data;
+using AP.MVC.Filter;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
 namespace AP.MVC.Controllers
 {
-    public class ProductsController : Controller
+    [CustomAuthorizationFilter]
+    public class ProductsController : BaseController
     {
         private ProductBusiness _business = new ProductBusiness();
 
