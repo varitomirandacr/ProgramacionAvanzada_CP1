@@ -17,6 +17,7 @@ namespace AP.Core.Validations
         /// <returns><see langword="true"/> if the password is at least 4 characters long; otherwise, <see langword="false"/>.</returns>
         public static bool ValidatePassword(string password)
         {
+            // SOLID: S, principio de reson.... por ABC
             return password.Length >= 12;
         }
 

@@ -1,4 +1,5 @@
 ﻿using AP.Data;
+using AP.Data.Entities;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace AP.Repositories
     /// Generic repository interface that defines the contract for data access operations.
     /// </summary>
     /// <typeparam name="T">The entity type that this repository manages</typeparam>
-    public interface IRepositoryBase<T> where T : class
+    public interface IRepositoryBase<T> where T : IEntity
     {
         /// <summary>
         /// Retrieves all entities of type T from the database.

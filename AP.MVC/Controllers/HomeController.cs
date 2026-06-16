@@ -1,3 +1,4 @@
+using AP.Core;
 using AP.MVC.Filter;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,9 @@ namespace AP.MVC.Controllers
     {
         public ActionResult Index()
         {
+            var semana03 = new Semana03(new Semana04());
+            semana03.CreateWeek();
+
             ViewBag.Message = "Welcome to ASP.NET MVC!";
             ViewData["Message"] = "This is the home page of your ASP.NET MVC application.";
             TempData["Message"] = "This message will persist across redirects.";
