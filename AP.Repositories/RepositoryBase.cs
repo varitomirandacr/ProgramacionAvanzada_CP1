@@ -54,7 +54,7 @@ namespace AP.Repositories
     /// Implements the Repository pattern to encapsulate data access logic.
     /// </summary>
     /// <typeparam name="T">The entity type that this repository manages</typeparam>
-    public class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    public class RepositoryBase<T> : IRepositoryBase<T> where T : class, IEntity
     {
         /// <summary>
         /// The Entity Framework database context used for data access.
