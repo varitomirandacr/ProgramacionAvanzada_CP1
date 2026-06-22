@@ -12,21 +12,17 @@ namespace AP.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class User
     {
-        public int ProductID { get; set; }
-        public string ProductName { get; set; }
-        public Nullable<int> InventoryID { get; set; }
-        public Nullable<int> SupplierID { get; set; }
-        public string Description { get; set; }
-        public Nullable<decimal> Rating { get; set; }
-        public Nullable<int> CategoryID { get; set; }
+        public int UserID { get; set; }
+        public string Username { get; set; }
+        public string Email { get; set; }
+        public string PasswordHash { get; set; }
+        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public Nullable<bool> IsActive { get; set; }
         public Nullable<System.DateTime> LastModified { get; set; }
         public string ModifiedBy { get; set; }
-        public string CreatedBy { get; set; }
-    
-        public virtual Category Category { get; set; }
-        public virtual Inventory Inventory { get; set; }
-        public virtual Supplier Supplier { get; set; }
+        public Nullable<int> RoleID { get; set; }
+        public string LastModifiedBy { get; set; }
     }
 }

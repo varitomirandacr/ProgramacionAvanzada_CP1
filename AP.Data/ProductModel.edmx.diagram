@@ -6,6 +6,17 @@
     <edmx:Diagrams>
       <Diagram DiagramId="d29fdbb8edc44d6b8e26a2a1748bb1c8" Name="Diagram1">
         <EntityTypeShape EntityType="ProductDBModel.Product" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProductDBModel.Category" Width="1.5" PointX="0.75" PointY="11.875" />
+        <EntityTypeShape EntityType="ProductDBModel.Component" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ProductDBModel.Inventory" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="ProductDBModel.Notification" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="ProductDBModel.Role" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ProductDBModel.Supplier" Width="1.5" PointX="0.75" PointY="8" />
+        <EntityTypeShape EntityType="ProductDBModel.Task" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="ProductDBModel.User" Width="1.5" PointX="7.375" PointY="0.75" />
+        <AssociationConnector Association="ProductDBModel.FK__Products__Catego__3B40CD36" />
+        <AssociationConnector Association="ProductDBModel.FK__Products__Invent__395884C4" />
+        <AssociationConnector Association="ProductDBModel.FK__Products__Suppli__3A4CA8FD" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
