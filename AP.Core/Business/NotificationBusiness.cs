@@ -32,5 +32,12 @@ namespace AP.Core.Business
         // 5. En la pantalla de Index, cada notificación debe tener opciones para Editar, Detalles y Eliminar, tal cual el ejemplo de products
         // 6. Para las funcionalidades secundarias, puede crear botones en la pantalla de Index para acceder a ellas...
         //      ...o bien, integrarlas como filtros dentro del mismo componente de búsqueda.
+
+        // ENTREGABLE:
+        // 1. Clase NotificationsRepository
+        // 2. Clase NotificationsBusiness
+        // 3. View de Index de Notifications
+        // TODO EL PROYECTO NO, solo esas clases
+        // Enviarlo como un *.zip 
     }
 }
